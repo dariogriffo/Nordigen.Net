@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Moq;
-using Nordigen.Net.Internal;
-using Nordigen.Net.Responses;
-using OneOf;
-using RichardSzalay.MockHttp;
-using Xunit;
-
-namespace Nordigen.Net.UnitTests
+﻿namespace Nordigen.Net.UnitTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Moq;
+    using Nordigen.Net.Internal;
+    using Nordigen.Net.Responses;
+    using OneOf;
+    using RichardSzalay.MockHttp;
+    using Xunit;
+
     public class NordigenHttpClientTests
     {
-        private static readonly NordigenApiOptions Options = new NordigenApiOptions()
-        {
-            Url = "https://api.nordigen.com/"
-        };
+        private static readonly NordigenApiOptions Options = new NordigenApiOptions();
+        private readonly ISerializer _serializer = new Serializer();
+
 
         [Fact]
         public async Task Get_When_Request_Is_Valid_Returns_Correct_Response()
@@ -51,7 +50,7 @@ namespace Nordigen.Net.UnitTests
 
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var sut = new NordigenHttpClient(tokensEndpoint, factory, Options);
+            var sut = new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options);
 
             var result = await sut.Get<Account>($"/api/v2/accounts/{id}/", CancellationToken.None);
 
@@ -80,7 +79,7 @@ namespace Nordigen.Net.UnitTests
 
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var sut = new NordigenHttpClient(tokensEndpoint, factory, Options);
+            var sut = new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options);
 
             _ = await sut.Get<Account>($"/api/v2/accounts/{id}/", CancellationToken.None);
 
@@ -125,7 +124,7 @@ namespace Nordigen.Net.UnitTests
 
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var sut = new NordigenHttpClient(tokensEndpoint, factory, options);
+            var sut = new NordigenHttpClient(tokensEndpoint, factory, _serializer, options);
 
             _ = await sut.Get<Account>($"/api/v2/accounts/{id}/", CancellationToken.None);
 

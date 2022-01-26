@@ -1,29 +1,23 @@
-﻿using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using OneOf;
-
-namespace Nordigen.Net.Internal
+﻿namespace Nordigen.Net.Internal
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using OneOf;
     using Responses;
 
     internal class TokensEndpoint : ITokensEndpoint
     {
-        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings()
-        {
-            ContractResolver =  new CamelCasePropertyNamesContractResolver()
-        };
-
+        private readonly ISerializer _serializer;
         private readonly HttpClient _client;
         private readonly NordigenApiOptions _options;
 
-        public TokensEndpoint(IHttpClientFactory factory, NordigenApiOptions options)
+        public TokensEndpoint(IHttpClientFactory factory, ISerializer serializer, NordigenApiOptions options)
         {
             _client = factory.CreateClient("tokens");
             _options = options;
+            _serializer = serializer;
         }
 
         public async Task<OneOf<Token, Error>> Get(CancellationToken cancellationToken)
@@ -34,14 +28,11 @@ namespace Nordigen.Net.Internal
                 _options.SecretKey
             };
 
-            var content = new StringContent(JsonConvert.SerializeObject(credentials, Settings), Encoding.UTF8, "application/json");
+            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, "application/json");
             var message = await _client.PostAsync("api/v2/token/new/", content, cancellationToken);
-            if (message.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<Token>(await message.Content.ReadAsStringAsync(), Settings);
-            }
-
-            return JsonConvert.DeserializeObject<Error>(await message.Content.ReadAsStringAsync(), Settings);
+            return message.IsSuccessStatusCode
+                ? (OneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
+                : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
         }
 
         public async Task<OneOf<Token, Error>> Refresh(string refresh, CancellationToken cancellationToken = default)
@@ -51,15 +42,13 @@ namespace Nordigen.Net.Internal
                 refresh
             };
 
-            var content = new StringContent(JsonConvert.SerializeObject(credentials, Settings), Encoding.UTF8, "application/json");
+            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, "application/json");
 
             var message = await _client.PostAsync("api/v2/token/refresh/", content, cancellationToken);
-            if (message.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<Token>(await message.Content.ReadAsStringAsync(), Settings);
-            }
+            return message.IsSuccessStatusCode
+                ? (OneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
+                : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
 
-            return JsonConvert.DeserializeObject<Error>(await message.Content.ReadAsStringAsync(), Settings);
         }
     }
 }
