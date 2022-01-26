@@ -8,7 +8,7 @@
         internal AccountDetails(string resource_id, string iban, string currency, string owner_name, string name, string product, string cash_account_type)
         {
             ResourceId = resource_id;
-            Iban = iban;
+            IBAN = iban;
             Currency = currency;
             OwnerName = owner_name;
             Name = name;
@@ -18,7 +18,7 @@
 
         public string ResourceId { get; }
 
-        public string Iban { get; }
+        public string IBAN { get; }
 
         public string Currency { get; }
 

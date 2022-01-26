@@ -9,13 +9,14 @@
 
     internal class TokensEndpoint : ITokensEndpoint
     {
+        internal const string HttpClientName = "tokens";
         private readonly ISerializer _serializer;
         private readonly HttpClient _client;
         private readonly NordigenApiOptions _options;
 
         public TokensEndpoint(IHttpClientFactory factory, ISerializer serializer, NordigenApiOptions options)
         {
-            _client = factory.CreateClient("tokens");
+            _client = factory.CreateClient(HttpClientName);
             _options = options;
             _serializer = serializer;
         }
