@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Nordigen.Net.Responses
+﻿namespace Nordigen.Net.Responses
 {
+    using System;
+    using System.Collections.Generic;
     using Newtonsoft.Json;
 
     public class Account

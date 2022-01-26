@@ -11,6 +11,7 @@
         }
 
         public IAccountsEndpoint Accounts { get; }
+        
         public IInstitutionsEndpoint Institutions { get; }
     }
 }

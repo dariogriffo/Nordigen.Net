@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-using Nordigen.Net.Internal;
-using ServiceCollection.Extensions.Modules;
-
-namespace Nordigen.Net
+﻿namespace Nordigen.Net
 {
+    using System;
+    using Microsoft.Extensions.DependencyInjection;
+    using Nordigen.Net.Internal;
+    using ServiceCollection.Extensions.Modules;
+
     public class NordigenApiModule : Module
     {
         private readonly NordigenApiOptions _options;
@@ -17,6 +17,7 @@ namespace Nordigen.Net
         protected override void Load(IServiceCollection services)
         {
             services.AddSingleton(_options);
+            services.AddSingleton<ISerializer, Serializer>();
             services.AddSingleton<ITokensEndpoint, TokensEndpoint>();
             services.AddHttpClient<TokensEndpoint>("tokens", x =>
              {

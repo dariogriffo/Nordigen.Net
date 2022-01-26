@@ -1,37 +1,31 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-
-using System.Threading;
-using System.Threading.Tasks;
-using OneOf;
-
-namespace Nordigen.Net.Internal
+﻿namespace Nordigen.Net.Internal
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using OneOf;
     using Responses;
 
     internal class NordigenHttpClient : INordigenHttpClient
     {
-        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings()
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
-
+        private readonly ITokensEndpoint _tokensEndpoint;
+        private readonly ISerializer _serializer;
         private readonly HttpClient _client;
         private readonly NordigenApiOptions _options;
-        private readonly ITokensEndpoint _tokensEndpoint;
         private readonly object _lock = new object();
         private Token? _token;
 
         public NordigenHttpClient(
             ITokensEndpoint tokensEndpoint, 
-            IHttpClientFactory factory,
+            IHttpClientFactory factory, 
+            ISerializer serializer,
             NordigenApiOptions options)
         {
             _client = factory.CreateClient("api");
             _options = options;
+            _serializer = serializer;
             _tokensEndpoint = tokensEndpoint;
         }
 
@@ -48,12 +42,9 @@ namespace Nordigen.Net.Internal
             }
 
             var message = await _client.GetAsync(url, cancellationToken);
-            if (message.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<T>(await message.Content.ReadAsStringAsync(), Settings);
-            }
-
-            return JsonConvert.DeserializeObject<Error>(await message.Content.ReadAsStringAsync(), Settings);
+            return message.IsSuccessStatusCode
+                ? (OneOf<T, Error>)_serializer.Deserialize<T>(await message.Content.ReadAsStringAsync())
+                : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
         }
 
         internal Token? Token => _token;
