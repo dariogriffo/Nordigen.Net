@@ -10,6 +10,8 @@
 
     internal class NordigenHttpClient : INordigenHttpClient
     {
+        internal const string HttpClientName = "api";
+
         private readonly ITokensEndpoint _tokensEndpoint;
         private readonly ISerializer _serializer;
         private readonly HttpClient _client;
@@ -23,7 +25,7 @@
             ISerializer serializer,
             NordigenApiOptions options)
         {
-            _client = factory.CreateClient("api");
+            _client = factory.CreateClient(HttpClientName);
             _options = options;
             _serializer = serializer;
             _tokensEndpoint = tokensEndpoint;
