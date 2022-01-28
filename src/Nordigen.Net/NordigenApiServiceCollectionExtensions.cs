@@ -1,21 +1,20 @@
 ﻿namespace Nordigen.Net
 {
     using System;
+    using Internal;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Nordigen.Net.Internal;
-    using ServiceCollection.Extensions.Modules;
 
-    public class NordigenApiModule : Module
+    public static class NordigenApiServiceCollectionExtensions
     {
-        protected override void Load(IServiceCollection services)
+        public static IServiceCollection AddNordigenApi(IServiceCollection services)
         {
             services.AddSingleton(serviceProvider =>
             {
                 return serviceProvider
-                        .GetRequiredService<IConfiguration>()
-                        .GetSection("NordigenApi").Get<NordigenApiOptions>() ??
-                            throw new ArgumentNullException(nameof(NordigenApiOptions));
+                           .GetRequiredService<IConfiguration>()
+                           .GetSection("NordigenApi").Get<NordigenApiOptions>() ??
+                       new NordigenApiOptions();
             });
 
             services.AddSingleton<ISerializer, Serializer>();
@@ -41,6 +40,7 @@
             services.AddSingleton<INordigenApi, NordigenApi>();
             services.AddSingleton<IAccountsEndpoint, AccountsEndpoint>();
             services.AddSingleton<IInstitutionsEndpoint, InstitutionsEndpoint>();
+            return services;
         }
     }
 }

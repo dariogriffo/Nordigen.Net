@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+## [0.4.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.4.0)
+
+Removed dependency on Nuget package
+Add simple Api installer
+Added documentation
+
 ## [0.3.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.3.0)
 
 Fixed name case for IBAN property
