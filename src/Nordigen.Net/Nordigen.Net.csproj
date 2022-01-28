@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
-		<Version>0.3.0</Version>
+		<Version>0.4.0</Version>
 		<Authors>https://github.com/dariogriffo</Authors>
 		<Company>https://github.com/dariogriffo</Company>
 		<Title>Nordigen.Net</Title>
@@ -50,7 +50,6 @@
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="[2.1.0,)" />
 	  <PackageReference Include="Newtonsoft.Json" Version="[11.0.1,)" />
 	  <PackageReference Include="OneOf" Version="3.0.205" />
-	  <PackageReference Include="ServiceCollection.Extensions.Modules" Version="2.3.1" />
 	</ItemGroup>
 
 </Project>
