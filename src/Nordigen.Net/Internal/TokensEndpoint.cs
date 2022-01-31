@@ -4,7 +4,6 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using OneOf;
     using Responses;
 
     internal class TokensEndpoint : ITokensEndpoint
@@ -21,7 +20,7 @@
             _serializer = serializer;
         }
 
-        public async Task<OneOf<Token, Error>> Get(CancellationToken cancellationToken)
+        public async Task<NOneOf<Token, Error>> Get(CancellationToken cancellationToken)
         {
             var credentials = new
             {
@@ -32,11 +31,11 @@
             var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, "application/json");
             var message = await _client.PostAsync("api/v2/token/new/", content, cancellationToken);
             return message.IsSuccessStatusCode
-                ? (OneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
+                ? (NOneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
                 : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
         }
 
-        public async Task<OneOf<Token, Error>> Refresh(string refresh, CancellationToken cancellationToken = default)
+        public async Task<NOneOf<Token, Error>> Refresh(string refresh, CancellationToken cancellationToken = default)
         {
             var credentials = new
             {
@@ -47,7 +46,7 @@
 
             var message = await _client.PostAsync("api/v2/token/refresh/", content, cancellationToken);
             return message.IsSuccessStatusCode
-                ? (OneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
+                ? (NOneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
                 : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
 
         }

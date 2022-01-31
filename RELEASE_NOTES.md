@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.5.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.5.0)
+
+Removed dependency on OneOf Nuget package
+
 ## [0.4.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.4.0)
 
 Removed dependency on Nuget package
