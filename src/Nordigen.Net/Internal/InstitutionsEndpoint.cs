@@ -5,7 +5,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Nordigen.Net.Responses;
-    using OneOf;
 
     internal class InstitutionsEndpoint : IInstitutionsEndpoint
     {
@@ -33,7 +32,7 @@
             _client = client;
         }
 
-        public Task<OneOf<Institution[], Error>> GetByCountryIso3166Code(string country, CancellationToken cancellationToken = default)
+        public Task<NOneOf<Institution[], Error>> GetByCountryIso3166Code(string country, CancellationToken cancellationToken = default)
         {
             if (!CountryList.Contains(country))
             {
@@ -43,7 +42,7 @@
             return _client.Get<Institution[]>($"api/v2/institutions/?country={country}", cancellationToken);
         }
 
-        public Task<OneOf<Institution, Error>> Get(Guid id, CancellationToken cancellationToken = default)
+        public Task<NOneOf<Institution, Error>> Get(Guid id, CancellationToken cancellationToken = default)
         {
             return _client.Get<Institution>($"api/v2/institutions/{id}/", cancellationToken);
         }

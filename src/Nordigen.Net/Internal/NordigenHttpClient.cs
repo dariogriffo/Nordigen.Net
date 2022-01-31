@@ -5,7 +5,6 @@
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
-    using OneOf;
     using Responses;
 
     internal class NordigenHttpClient : INordigenHttpClient
@@ -31,7 +30,7 @@
             _tokensEndpoint = tokensEndpoint;
         }
 
-        public async Task<OneOf<T, Error>> Get<T>(string url, CancellationToken cancellationToken)
+        public async Task<NOneOf<T, Error>> Get<T>(string url, CancellationToken cancellationToken)
             where T : class
         {
             try
@@ -45,7 +44,7 @@
 
             var message = await _client.GetAsync(url, cancellationToken);
             return message.IsSuccessStatusCode
-                ? (OneOf<T, Error>)_serializer.Deserialize<T>(await message.Content.ReadAsStringAsync())
+                ? (NOneOf<T, Error>)_serializer.Deserialize<T>(await message.Content.ReadAsStringAsync())
                 : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
         }
 
@@ -53,7 +52,7 @@
 
         private async Task EnsureValidToken(CancellationToken cancellationToken)
         {
-            async Task UpdateToken(OneOf<Token, Error> oneOf)
+            async Task UpdateToken(NOneOf<Token, Error> oneOf)
             {
                 await oneOf.Match(t =>
                 {

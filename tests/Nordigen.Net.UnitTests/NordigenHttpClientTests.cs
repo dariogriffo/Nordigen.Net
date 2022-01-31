@@ -10,7 +10,6 @@
     using Moq;
     using Nordigen.Net.Internal;
     using Nordigen.Net.Responses;
-    using OneOf;
     using RichardSzalay.MockHttp;
     using Xunit;
 
@@ -114,7 +113,7 @@
             var lastResponse = new Token(authToken, 10, refreshToken, 1000);
             tokensEndpointMock
                 .Setup(x => x.Refresh(refreshToken, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(OneOf<Token, Error>.FromT0(lastResponse));
+                .ReturnsAsync(NOneOf<Token, Error>.FromT0(lastResponse));
 
             var options = new NordigenApiOptions()
             {
