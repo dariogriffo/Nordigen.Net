@@ -3,6 +3,7 @@
     using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Responses;
@@ -19,8 +20,8 @@
         private Token? _token;
 
         public NordigenHttpClient(
-            ITokensEndpoint tokensEndpoint, 
-            IHttpClientFactory factory, 
+            ITokensEndpoint tokensEndpoint,
+            IHttpClientFactory factory,
             ISerializer serializer,
             NordigenApiOptions options)
         {
@@ -45,6 +46,42 @@
             var message = await _client.GetAsync(url, cancellationToken);
             return message.IsSuccessStatusCode
                 ? (NOneOf<T, Error>)_serializer.Deserialize<T>(await message.Content.ReadAsStringAsync())
+                : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
+        }
+
+        public async Task<NOneOf<TResult, Error>> Post<T, TResult>(T model, string url, CancellationToken cancellationToken = default) where T : class
+        {
+            try
+            {
+                await EnsureValidToken(cancellationToken);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return new Error(401, string.Empty, string.Empty, string.Empty);
+            }
+
+            var content = new StringContent(_serializer.Serialize(model), Encoding.UTF8, "application/json");
+
+            var message = await _client.PostAsync(url, content, cancellationToken);
+            return message.IsSuccessStatusCode
+                ? (NOneOf<TResult, Error>)_serializer.Deserialize<TResult>(await message.Content.ReadAsStringAsync())
+                : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
+        }
+
+        public async Task<NOneOf<Deleted, Error>> Delete(string url, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                await EnsureValidToken(cancellationToken);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return new Error(401, string.Empty, string.Empty, string.Empty);
+            }
+
+            var message = await _client.DeleteAsync(url, cancellationToken);
+            return message.IsSuccessStatusCode ?
+                NOneOf<Deleted, Error>.FromT0(Deleted.Value)
                 : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
         }
 

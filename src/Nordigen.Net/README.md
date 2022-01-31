@@ -31,6 +31,7 @@ services.AddNordigenApi();
 INordigenApi => Just inject this and you can have access to all the endpoints with the members
 IAccountsEndpoint => Access to Accounts
 IInstitutionsEndpoint => Access to Institutions
+IRequisitionsEndpoint => Access to Requisitions
 ```
 
 # Token management

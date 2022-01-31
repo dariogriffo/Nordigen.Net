@@ -40,6 +40,7 @@
             services.AddSingleton<INordigenApi, NordigenApi>();
             services.AddSingleton<IAccountsEndpoint, AccountsEndpoint>();
             services.AddSingleton<IInstitutionsEndpoint, InstitutionsEndpoint>();
+            services.AddSingleton<IRequisitionsEndpoint, RequisitionsEndpoint>();
             return services;
         }
     }

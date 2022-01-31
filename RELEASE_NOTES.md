@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.6.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.6.0)
+
+Added requisitions endpoint
+
 ## [0.5.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.5.0)
 
 Removed dependency on OneOf Nuget package
