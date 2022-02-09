@@ -15,7 +15,7 @@ Work still in progress
     "SecretId" : "SOME_SECRET_ID_HERE",
     "SecretKey" : "SOME_SECRET_KEY_HERE",
     "AccessTokenValidBeforeSeconds" : 5,
-    "RefreshTokenValidBeforeSeconds" : 5;
+    "RefreshTokenValidBeforeSeconds" : 5
 }
 ```
 
