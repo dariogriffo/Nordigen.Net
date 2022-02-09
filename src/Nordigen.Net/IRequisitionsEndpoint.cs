@@ -1,10 +1,10 @@
 ﻿namespace Nordigen.Net
 {
+    using Queries;
+    using Responses;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Queries;
-    using Responses;
 
     public interface IRequisitionsEndpoint
     {

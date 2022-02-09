@@ -1,7 +1,7 @@
 ﻿namespace Nordigen.Net.Internal.Model
 {
-    using System;
     using Newtonsoft.Json;
+    using System;
 
     internal class RequisitionPost
     {

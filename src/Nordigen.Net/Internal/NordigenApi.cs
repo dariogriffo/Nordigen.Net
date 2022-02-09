@@ -3,8 +3,8 @@
     public class NordigenApi : INordigenApi
     {
         public NordigenApi(
-            IAccountsEndpoint accounts, 
-            IInstitutionsEndpoint institutions, 
+            IAccountsEndpoint accounts,
+            IInstitutionsEndpoint institutions,
             IRequisitionsEndpoint requisitions)
         {
             Accounts = accounts;
@@ -13,9 +13,9 @@
         }
 
         public IAccountsEndpoint Accounts { get; }
-        
+
         public IInstitutionsEndpoint Institutions { get; }
-        
+
         public IRequisitionsEndpoint Requisitions { get; }
     }
 }

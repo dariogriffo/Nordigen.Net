@@ -1,7 +1,7 @@
 ﻿namespace Nordigen.Net.Internal.Model
 {
-    using System.Collections.Generic;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
 
 
     public class PaginationResult<T>
@@ -21,11 +21,11 @@
         }
 
         public int Count { get; }
-        
+
         public string Next { get; }
-        
+
         public string Previous { get; }
-        
+
         public T[] Results { get; }
     }
 }

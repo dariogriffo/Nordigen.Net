@@ -1,11 +1,14 @@
 ﻿namespace Nordigen.Net.Responses
 {
-    using System.Collections.Generic;
     using Queries;
+    using System.Collections.Generic;
 
     public class PaginationResult<T>
     {
-        internal PaginationResult(Internal.Model.PaginationResult<T> paginationResult, int limit, int offset)
+        internal PaginationResult(
+            Internal.Model.PaginationResult<T> paginationResult,
+            int limit,
+            int offset)
         {
             Result = paginationResult.Results;
             var taken = offset + Result.Length;

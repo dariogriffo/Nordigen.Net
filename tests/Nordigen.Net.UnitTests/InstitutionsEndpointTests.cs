@@ -1,16 +1,16 @@
 ﻿namespace Nordigen.Net.UnitTests
 {
+    using FluentAssertions;
+    using Moq;
+    using Nordigen.Net.Internal;
+    using Nordigen.Net.Responses;
+    using RichardSzalay.MockHttp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Moq;
-    using Nordigen.Net.Internal;
-    using Nordigen.Net.Responses;
-    using RichardSzalay.MockHttp;
     using Xunit;
 
 
@@ -43,6 +43,7 @@
 
             Func<Task> action = () => sut.GetByCountryIso3166Code("XX", CancellationToken.None);
             var result = await action.Should().ThrowAsync<ArgumentOutOfRangeException>();
+
             result.WithMessage("Unknown country. Please check the official ISO country codes (Parameter 'country')");
         }
 
@@ -66,9 +67,6 @@
                 .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var sut = new InstitutionsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
-
-            var result = await sut.GetByCountryIso3166Code(id, CancellationToken.None);
 
             var insitution1 = new Institution(
                 "ABNAMRO_ABNAGB2LXXX",
@@ -87,6 +85,11 @@
                 "https://cdn.nordigen.com/ais/AMERICAN_EXPRESS_AESUGB21.png");
 
             var expected = new List<Institution>() { insitution1, insitution2 };
+
+            var sut = new InstitutionsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
+
+            var result = await sut.GetByCountryIso3166Code(id, CancellationToken.None);
+
             result.Value.Should().BeEquivalentTo(expected);
         }
 
@@ -96,11 +99,12 @@
             var id = Guid.NewGuid();
             var authToken = Guid.NewGuid().ToString();
             var handlerMock = new MockHttpMessageHandler();
-            const string content = "{\"id\": \"ABNAMRO_ABNAGB2LXXX\",\"name\": \"ABN AMRO Bank Commercial\",\"bic\": \"ABNAGB2LXXX\",\"transaction_total_days\": \"540\",\"countries\": [\"GB\"],\"logo\": \"https://cdn.nordigen.com/ais/ABNAMRO_FTSBDEFAXXX.png\"}";
+            const string payload = "{\"id\": \"ABNAMRO_ABNAGB2LXXX\",\"name\": \"ABN AMRO Bank Commercial\",\"bic\": \"ABNAGB2LXXX\",\"transaction_total_days\": \"540\",\"countries\": [\"GB\"],\"logo\": \"https://cdn.nordigen.com/ais/ABNAMRO_FTSBDEFAXXX.png\"}";
             handlerMock
                 .When($"/api/v2/institutions/{id}/")
                 .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
-                .Respond("application/json", content);
+                .Respond("application/json", payload);
+            var institution = _serializer.Deserialize<Institution>(payload);
 
             var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
             var tokensEndpoint = Mock.Of<ITokensEndpoint>();
@@ -113,7 +117,6 @@
 
             var result = await sut.Get(id, CancellationToken.None);
 
-            var institution = _serializer.Deserialize<Institution>(content);
             result.Value.Should().BeEquivalentTo(institution);
         }
     }

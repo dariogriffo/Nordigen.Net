@@ -1,5 +1,11 @@
 ﻿namespace Nordigen.Net.UnitTests
 {
+    using FluentAssertions;
+    using Moq;
+    using Nordigen.Net.Internal;
+    using Nordigen.Net.Responses;
+    using Queries;
+    using RichardSzalay.MockHttp;
     using System;
     using System.Linq;
     using System.Net;
@@ -7,12 +13,6 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Moq;
-    using Nordigen.Net.Internal;
-    using Nordigen.Net.Responses;
-    using Queries;
-    using RichardSzalay.MockHttp;
     using Xunit;
 
     public class AccountsEndpointTests
@@ -20,19 +20,20 @@
         private static readonly NordigenApiOptions Options = new NordigenApiOptions();
         private readonly ISerializer _serializer = new Serializer();
 
-
         [Fact]
         public async Task Get_When_Account_Is_Found_Returns_Valid_Information()
         {
             var id = Guid.NewGuid();
             var authToken = Guid.NewGuid().ToString();
             var handlerMock = new MockHttpMessageHandler();
-            const string content =
+            const string payload =
                 "{\"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\": \"2022-01-22T22:30:50.538Z\",\"last_accessed\": \"2022-01-22T22:30:50.538Z\",\"iban\": \"NL49ABNA1969256915\",\"institution_id\": \"Lloyds\",\"status\": {\"DISCOVERED\": \"User has successfully authenticated and account is discovered\"}}";
             handlerMock
                 .When($"/api/v2/accounts/{id}/")
                 .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
-                .Respond("application/json", content);
+                .Respond("application/json", payload);
+
+            var expected = _serializer.Deserialize<Account>(payload);
 
             var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
             var tokensEndpoint = Mock.Of<ITokensEndpoint>();
@@ -41,14 +42,11 @@
                 .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var serializer = _serializer;
-            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, serializer, Options));
+
+            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
 
             var result = await sut.Get(id, CancellationToken.None);
-
-            var expected = serializer.Deserialize<Account>(content);
-            result.Value.Should().BeOfType<Account>();
-            result.Value.Should().BeEquivalentTo(expected, x => x.Excluding(y => y.Created));
+            result.AsT0.Should().BeEquivalentTo(expected, x => x.Excluding(y => y.Created));
         }
 
         [Fact]
@@ -76,10 +74,7 @@
 
             var result = await sut.Get(id, CancellationToken.None);
 
-            result
-                .Value.Should().BeOfType<Error>()
-                .And.Subject.As<Error>()
-                .StatusCode.Should().Be(404);
+            result.AsT1.StatusCode.Should().Be(404);
         }
 
         [Fact]
@@ -105,12 +100,10 @@
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
             var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
+
             var result = await sut.Get(id, CancellationToken.None);
 
-            result
-                .Value.Should().BeOfType<Error>()
-                .And.Subject.As<Error>()
-                .StatusCode.Should().Be(500);
+            result.AsT1.StatusCode.Should().Be(500);
         }
 
         [Fact]
@@ -126,6 +119,8 @@
                 .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
                 .Respond("application/json", response);
 
+            var expected = _serializer.Deserialize<Balance[]>(payload);
+
             var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
             var tokensEndpoint = Mock.Of<ITokensEndpoint>();
             Mock.Get(tokensEndpoint)
@@ -133,14 +128,11 @@
                 .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var serializer = _serializer;
-            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, serializer, Options));
+            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
 
             var result = await sut.Balances(id, CancellationToken.None);
 
-            var expected = serializer.Deserialize<Balance[]>(payload);
-            result.Value.Should().BeOfType<Balance[]>();
-            result.Value.Should().BeEquivalentTo(expected);
+            result.AsT0.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -163,14 +155,12 @@
                 .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var serializer = _serializer;
-            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, serializer, Options));
+            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
 
             var result = await sut.Details(id, CancellationToken.None);
 
-            var expected = serializer.Deserialize<AccountDetails>(payload);
-            result.Value.Should().BeOfType<AccountDetails>();
-            result.Value.Should().BeEquivalentTo(expected);
+            var expected = _serializer.Deserialize<AccountDetails>(payload);
+            result.AsT0.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -188,6 +178,8 @@
                 .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
                 .Respond("application/json", response);
 
+            var expected = _serializer.Deserialize<Transactions>(payload);
+
             var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
             var tokensEndpoint = Mock.Of<ITokensEndpoint>();
             Mock.Get(tokensEndpoint)
@@ -195,14 +187,12 @@
                 .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
             var factory = Mock.Of<IHttpClientFactory>();
             Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
-            var serializer = _serializer;
-            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, serializer, Options));
+            var sut = new AccountsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
             var filter = new AccountTransactionsFilter(from, to);
+
             var result = await sut.Transactions(id, filter, CancellationToken.None);
 
-            var expected = serializer.Deserialize<Transactions>(payload);
-            result.Value.Should().BeOfType<Transactions>();
-            result.Value.Should().BeEquivalentTo(expected);
+            result.AsT0.Should().BeEquivalentTo(expected);
         }
     }
 }

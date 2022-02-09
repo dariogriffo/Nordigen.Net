@@ -1,14 +1,19 @@
 ﻿namespace Nordigen.Net.Responses
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
-
 
     public class Account
     {
         [JsonConstructor]
-        internal Account(string id, DateTime created, DateTime last_accessed, string iban, string institution_id, IReadOnlyDictionary<string, string> status)
+        internal Account(
+            string id,
+            DateTime created,
+            DateTime last_accessed,
+            string iban,
+            string institution_id,
+            IReadOnlyDictionary<string, string> status)
         {
             Id = id;
             Created = created;

@@ -1,16 +1,16 @@
 ﻿namespace Nordigen.Net.UnitTests
 {
+    using FluentAssertions;
+    using Moq;
+    using Nordigen.Net.Internal;
+    using Nordigen.Net.Responses;
+    using RichardSzalay.MockHttp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Moq;
-    using Nordigen.Net.Internal;
-    using Nordigen.Net.Responses;
-    using RichardSzalay.MockHttp;
     using Xunit;
 
     public class NordigenHttpClientTests

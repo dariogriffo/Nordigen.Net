@@ -1,8 +1,8 @@
 ﻿namespace Nordigen.Net.Internal
 {
+    using Responses;
     using System.Threading;
     using System.Threading.Tasks;
-    using Responses;
 
     internal interface INordigenHttpClient
     {

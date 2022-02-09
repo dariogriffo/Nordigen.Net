@@ -7,7 +7,13 @@ namespace Nordigen.Net.Responses
     public class Institution
     {
         [JsonConstructor]
-        internal Institution(string id, string name, string bic, string transaction_total_days, string[] countries, string logo)
+        internal Institution(
+            string id,
+            string name,
+            string bic,
+            string transaction_total_days,
+            string[] countries,
+            string logo)
         {
             Id = id;
             Name = name;

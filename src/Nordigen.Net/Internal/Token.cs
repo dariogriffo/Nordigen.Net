@@ -1,14 +1,14 @@
 ﻿namespace Nordigen.Net.Internal
 {
-    using System;
     using Newtonsoft.Json;
+    using System;
 
     internal class Token
     {
         //internal just for the sake of testing
         internal DateTime CreatedUtc { get; set; } = DateTime.UtcNow;
-        
-       
+
+
         [JsonConstructor]
         public Token(string access, int accessExpires, string refresh, int refreshExpires)
         {
