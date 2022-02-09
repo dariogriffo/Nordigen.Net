@@ -1,10 +1,10 @@
 ﻿namespace Nordigen.Net.Internal
 {
+    using Responses;
     using System.Net.Http;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Responses;
 
     internal class TokensEndpoint : ITokensEndpoint
     {
@@ -28,7 +28,7 @@
                 _options.SecretKey
             };
 
-            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, "application/json");
+            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, Constants.ContentMediaType);
             var message = await _client.PostAsync("api/v2/token/new/", content, cancellationToken);
             return message.IsSuccessStatusCode
                 ? (NOneOf<Token, Error>)_serializer.Deserialize<Token>(await message.Content.ReadAsStringAsync())
@@ -42,7 +42,7 @@
                 refresh
             };
 
-            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, "application/json");
+            var content = new StringContent(_serializer.Serialize(credentials), Encoding.UTF8, Constants.ContentMediaType);
 
             var message = await _client.PostAsync("api/v2/token/refresh/", content, cancellationToken);
             return message.IsSuccessStatusCode

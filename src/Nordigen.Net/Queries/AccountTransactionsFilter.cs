@@ -11,7 +11,7 @@
         }
 
         public DateTime DateFrom { get; }
-        
+
         public DateTime DateTo { get; }
     }
 }

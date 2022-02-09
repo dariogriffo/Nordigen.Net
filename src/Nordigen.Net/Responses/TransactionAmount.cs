@@ -12,7 +12,7 @@
         }
 
         public string Currency { get; }
-        
+
         public string Amount { get; }
     }
 }

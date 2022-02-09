@@ -9,7 +9,7 @@
         }
 
         public int Limit { get; }
-        
+
         public int Offset { get; }
     }
 }

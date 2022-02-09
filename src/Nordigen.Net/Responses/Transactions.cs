@@ -1,14 +1,14 @@
 ﻿namespace Nordigen.Net.Responses
 {
-    using System.Collections.Generic;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
 
     public class Transactions
     {
         private const string BookedKey = "booked";
         private const string PendingKey = "pending";
         private readonly IDictionary<string, Transaction[]> _transactions;
-        
+
         [JsonConstructor]
         internal Transactions(Transaction[] booked, Transaction[] pending)
         {

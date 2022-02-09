@@ -1,14 +1,14 @@
 ﻿namespace Nordigen.Net.UnitTests
 {
+    using FluentAssertions;
+    using Moq;
+    using Nordigen.Net.Internal;
+    using RichardSzalay.MockHttp;
     using System;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Moq;
-    using Nordigen.Net.Internal;
-    using RichardSzalay.MockHttp;
     using Xunit;
 
     public class TokensEndpointTests
@@ -48,8 +48,7 @@
 
             var result = await sut.Get(CancellationToken.None);
 
-            result.Value.Should().BeOfType<Token>();
-            result.Value.Should().BeEquivalentTo(expected);
+            result.AsT0.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -63,7 +62,7 @@
                 .When(HttpMethod.Post, "/api/v2/token/refresh/")
                 .With(x => x.Headers.Any() == false)
                 .With(x => ((StringContent)x.Content!).ReadAsStringAsync().Result.Contains(refreshToken))
-                .Respond("application/json",_serializer.Serialize(expected));
+                .Respond("application/json", _serializer.Serialize(expected));
 
             var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
             var tokensEndpoint = Mock.Of<ITokensEndpoint>();
@@ -77,8 +76,7 @@
 
             var result = await sut.Refresh(refreshToken, CancellationToken.None);
 
-            result.Value.Should().BeOfType<Token>();
-            result.Value.Should().BeEquivalentTo(expected);
+            result.AsT0.Should().BeEquivalentTo(expected);
         }
     }
 }

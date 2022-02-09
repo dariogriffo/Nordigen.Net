@@ -5,7 +5,14 @@
     public class AccountDetails
     {
         [JsonConstructor]
-        internal AccountDetails(string resource_id, string iban, string currency, string owner_name, string name, string product, string cash_account_type)
+        internal AccountDetails(
+            string resource_id,
+            string iban,
+            string currency,
+            string owner_name,
+            string name,
+            string product,
+            string cash_account_type)
         {
             ResourceId = resource_id;
             IBAN = iban;

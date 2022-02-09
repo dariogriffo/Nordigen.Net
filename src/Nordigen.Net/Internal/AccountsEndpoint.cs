@@ -1,11 +1,11 @@
 ﻿namespace Nordigen.Net.Internal
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Model;
     using Nordigen.Net.Responses;
     using Queries;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     internal class AccountsEndpoint : IAccountsEndpoint
     {
@@ -17,7 +17,7 @@
         }
 
         public Task<NOneOf<Account, Error>> Get(Guid id, CancellationToken cancellationToken) => _client.Get<Account>($"api/v2/accounts/{id}/", cancellationToken);
-       
+
         public async Task<NOneOf<AccountDetails, Error>> Details(Guid id, CancellationToken cancellationToken = default)
         {
             var result = await _client.Get<AccountDetailsHolder>($"api/v2/accounts/{id}/details/", cancellationToken);

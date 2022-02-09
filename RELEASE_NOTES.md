@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+## [0.7.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.7.0)
+
+Allow retry configuration.
+Added UserAgent HTTP header.
+Updated documentation with examples.
+
 ## [0.6.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.6.0)
 
 Added requisitions endpoint

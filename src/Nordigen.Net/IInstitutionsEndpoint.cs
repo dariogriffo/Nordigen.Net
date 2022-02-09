@@ -1,9 +1,9 @@
 ﻿namespace Nordigen.Net
 {
+    using Nordigen.Net.Responses;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Nordigen.Net.Responses;
 
     public interface IInstitutionsEndpoint
     {

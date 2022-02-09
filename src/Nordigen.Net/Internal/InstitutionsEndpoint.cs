@@ -1,10 +1,10 @@
 ﻿namespace Nordigen.Net.Internal
 {
+    using Nordigen.Net.Responses;
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Nordigen.Net.Responses;
 
     internal class InstitutionsEndpoint : IInstitutionsEndpoint
     {

@@ -1,8 +1,8 @@
 ﻿namespace Nordigen.Net.Responses
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
 
     public class Requisition
     {
@@ -37,27 +37,27 @@
         }
 
         public string Id { get; }
-        
+
         public DateTime Created { get; }
-        
+
         public string Redirect { get; }
-        
+
         public RequisitionStatus Status { get; }
-        
+
         public Guid InstitutionId { get; }
-        
+
         public Guid Agreement { get; }
-        
+
         public string Reference { get; }
-        
+
         public IReadOnlyList<string> Accounts { get; }
-        
+
         public string UserLanguage { get; }
-        
+
         public string Link { get; }
-        
+
         public string Ssn { get; }
-        
+
         public bool AccountSelection { get; }
     }
 }
