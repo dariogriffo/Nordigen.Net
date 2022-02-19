@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class AccountsEndpoint : IAccountsEndpoint
+internal class AccountsEndpoint : IAccountsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 

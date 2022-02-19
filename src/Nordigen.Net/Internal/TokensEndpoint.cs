@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class TokensEndpoint : ITokensEndpoint
+internal class TokensEndpoint : ITokensEndpoint, IEndpoint
 {
     internal const string HttpClientName = "tokens";
     private readonly ISerializer _serializer;

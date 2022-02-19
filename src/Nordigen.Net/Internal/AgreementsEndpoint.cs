@@ -7,7 +7,7 @@ using Agreement = Nordigen.Net.Requests.Agreement;
 
 namespace Nordigen.Net.Internal;
 
-internal class AgreementsEndpoint : IAgreementsEndpoint
+internal class AgreementsEndpoint : IAgreementsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 
