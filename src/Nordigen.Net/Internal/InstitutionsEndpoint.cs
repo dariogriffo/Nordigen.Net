@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class InstitutionsEndpoint : IInstitutionsEndpoint
+internal class InstitutionsEndpoint : IInstitutionsEndpoint, IEndpoint
 {
     private static readonly HashSet<string> CountryList = new HashSet<string>()
     {

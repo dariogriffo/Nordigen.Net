@@ -13,25 +13,32 @@ public static class NordigenApiServiceCollectionExtensions
     /// <param name="services"></param>
     /// <returns> a<see cref="IHttpClientBuilder"/> to configure retries with <see cref="Polly"/></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IHttpClientBuilder AddNordigenApi(IServiceCollection services)
+    public static IHttpClientBuilder AddNordigenApi(this IServiceCollection services)
     {
         services.AddSingleton(serviceProvider =>
         {
-            return serviceProvider
-                       .GetRequiredService<IConfiguration>()
-                       .GetSection("NordigenApi").Get<NordigenApiOptions>() ??
-                   new NordigenApiOptions();
+            var options = serviceProvider
+                .GetRequiredService<IConfiguration>()
+                .GetSection("NordigenApi").Get<NordigenApiOptions>();
+            if (string.IsNullOrWhiteSpace(options.SecretId) || string.IsNullOrWhiteSpace(options.SecretKey))
+            {
+                throw new InvalidOperationException("SecretId and SecretKey are required to connect to Nordigen");
+            }
+            
+            return options;
         });
 
         services.AddSingleton<ISerializer, Serializer>();
         services.AddSingleton<ITokensEndpoint, TokensEndpoint>();
+        var assemblyName = typeof(INordigenApi).Assembly.GetName();
+        var userAgentHeader = $"{assemblyName.Name}/{assemblyName.Version}";
         services.AddHttpClient(TokensEndpoint.HttpClientName, (serviceProvider, client) =>
         {
             var options = serviceProvider
                               .GetRequiredService<NordigenApiOptions>() ??
                           throw new ArgumentNullException(nameof(NordigenApiOptions));
             client.DefaultRequestHeaders.Add("Accept", Constants.AcceptedMediaType);
-            client.DefaultRequestHeaders.Add("User-Agent", Constants.UserAgent);
+            client.DefaultRequestHeaders.Add("User-Agent", userAgentHeader);
             client.BaseAddress = new Uri($"{options.Url.TrimEnd('/')}");
         });
 
@@ -47,7 +54,7 @@ public static class NordigenApiServiceCollectionExtensions
                               .GetRequiredService<NordigenApiOptions>() ??
                           throw new ArgumentNullException(nameof(NordigenApiOptions));
             client.DefaultRequestHeaders.Add("Accept", Constants.AcceptedMediaType);
-            client.DefaultRequestHeaders.Add("User-Agent", Constants.UserAgent);
+            client.DefaultRequestHeaders.Add("User-Agent", userAgentHeader);
             client.BaseAddress = new Uri($"{options.Url.TrimEnd('/')}");
         });
     }

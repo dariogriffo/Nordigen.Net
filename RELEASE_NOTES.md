@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.8.1](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.8.1)
+
+Fix DI registration
+
 ## [0.8.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.8.0)
 
 Added agreements endpoint

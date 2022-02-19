@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class RequisitionsEndpoint : IRequisitionsEndpoint
+public class RequisitionsEndpoint : IRequisitionsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 
