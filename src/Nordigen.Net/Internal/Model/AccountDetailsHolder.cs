@@ -1,16 +1,15 @@
-﻿namespace Nordigen.Net.Internal.Model
+﻿namespace Nordigen.Net.Internal.Model;
+
+using Newtonsoft.Json;
+using Responses;
+
+public class AccountDetailsHolder
 {
-    using Newtonsoft.Json;
-    using Responses;
-
-    public class AccountDetailsHolder
+    [JsonConstructor]
+    public AccountDetailsHolder(AccountDetails account)
     {
-        [JsonConstructor]
-        public AccountDetailsHolder(AccountDetails account)
-        {
-            Account = account;
-        }
-
-        public AccountDetails Account { get; }
+        Account = account;
     }
+
+    public AccountDetails Account { get; }
 }

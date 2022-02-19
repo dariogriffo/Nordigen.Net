@@ -1,10 +1,20 @@
-﻿namespace Nordigen.Net.Responses
+﻿using Newtonsoft.Json;
+
+namespace Nordigen.Net.Responses;
+
+public class Deleted
 {
-    public struct Deleted
+    [JsonConstructor]
+    public Deleted(
+        string summary,
+        string detail
+    )
     {
-        public static Deleted Value
-        {
-            get;
-        } = new Deleted();
+        this.Summary = summary;
+        this.Detail = detail;
     }
+
+    public string Summary { get; }
+        
+    public string Detail { get; }
 }

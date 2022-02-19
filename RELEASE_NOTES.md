@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+## [0.8.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.8.0)
+
+Added agreements endpoint
+Added unit tests for requisitions endpoint
+
 ## [0.7.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.7.0)
 
 Allow retry configuration.

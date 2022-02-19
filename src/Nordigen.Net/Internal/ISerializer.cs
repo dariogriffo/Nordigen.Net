@@ -1,9 +1,8 @@
-﻿namespace Nordigen.Net.Internal
-{
-    internal interface ISerializer
-    {
-        T Deserialize<T>(string value);
+﻿namespace Nordigen.Net.Internal;
 
-        string Serialize<T>(T value);
-    }
+internal interface ISerializer
+{
+    T Deserialize<T>(string value);
+
+    string Serialize<T>(T value);
 }

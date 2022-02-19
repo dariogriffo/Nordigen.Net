@@ -1,16 +1,15 @@
-﻿namespace Nordigen.Net.Responses
+﻿namespace Nordigen.Net.Responses;
+
+using Newtonsoft.Json;
+
+public class DebtorAccount
 {
-    using Newtonsoft.Json;
 
-    public class DebtorAccount
+    [JsonConstructor]
+    public DebtorAccount(string iban)
     {
-
-        [JsonConstructor]
-        public DebtorAccount(string iban)
-        {
-            IBAN = iban;
-        }
-
-        public string IBAN { get; }
+        IBAN = iban;
     }
+
+    public string IBAN { get; }
 }
