@@ -1,12 +1,11 @@
-﻿namespace Nordigen.Net
+﻿namespace Nordigen.Net;
+
+public interface INordigenApi
 {
-    public interface INordigenApi
-    {
-        IAccountsEndpoint Accounts { get; }
+    IAccountsEndpoint Accounts { get; }
 
-        IInstitutionsEndpoint Institutions { get; }
+    IInstitutionsEndpoint Institutions { get; }
 
-        IRequisitionsEndpoint Requisitions { get; }
+    IRequisitionsEndpoint Requisitions { get; }
 
-    }
 }

@@ -1,10 +1,9 @@
-﻿namespace Nordigen.Net.Responses
+﻿namespace Nordigen.Net.Responses;
+
+public struct End
 {
-    public struct End
+    public static End Value
     {
-        public static End Value
-        {
-            get;
-        } = new End();
-    }
+        get;
+    } = new End();
 }

@@ -10,7 +10,7 @@ Work still in progress
 
 2- Add a configuration section into your app, and configure it (the values shown below are the default ones except the keys)
 ```json
-"NordigenApi": {
+"NordigenApi" : {
     "Url" : "https://ob.nordigen.com/",
     "SecretId" : "SOME_SECRET_ID_HERE",
     "SecretKey" : "SOME_SECRET_KEY_HERE",
@@ -30,9 +30,10 @@ services.AddNordigenApi();
 4- Now you can access a set of interfaces to reach the Nordigen platform
 ```csharp
 INordigenApi => Just inject this and you can have access to all the endpoints with the members
-IAccountsEndpoint 2=> Access to Accounts
+IAccountsEndpoint => Access to Accounts
 IInstitutionsEndpoint => Access to Institutions
 IRequisitionsEndpoint => Access to Requisitions
+IAgreementsEndpoint => Access to Agreements
 ```
 
 # Retries
