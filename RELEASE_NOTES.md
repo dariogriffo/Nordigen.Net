@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+## [0.9.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.0)
+
+Defaults for pagination.
+Update README file
+
 ## [0.8.1](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.8.1)
 
 Fix DI registration
