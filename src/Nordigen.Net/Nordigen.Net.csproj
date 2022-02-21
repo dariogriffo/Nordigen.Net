@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<Authors>https://github.com/dariogriffo</Authors>
 		<Company>https://github.com/dariogriffo</Company>
 		<Title>Nordigen.Net</Title>
@@ -23,11 +23,12 @@
 		<PackageTags>nordigen open-banking</PackageTags>
 		<PackageReleaseNotes>https://github.com/dariogriffo/Nordigen.Net/blob/main/RELEASE_NOTES.md</PackageReleaseNotes>
 		<PackageLicenseFile>license.txt</PackageLicenseFile>
+		<OneOfPackageLicenseFile>license.oneof.txt</OneOfPackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="license\license.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
-		<None Include="license\license.oneof.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+		<None Include="license\license.oneof.txt" Pack="true" PackagePath="$(OneOfPackageLicenseFile)" />
 		<None Include="images\icon.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>

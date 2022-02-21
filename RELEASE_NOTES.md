@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.9.1](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.1)
+
+Fixed Harry McIntyre's [OneOf](https://github.com/mcintyre321/OneOf) license
+
 ## [0.9.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.0)
 
 Defaults for pagination.
