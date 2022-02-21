@@ -6,7 +6,8 @@
 
 # Nordigen.Net
 Unofficial .NET SDK for Nordigen.
-Work still in progress
+The only missing part are premiums. 
+Because of the unclear documentation on the responses for them the Api, this library will remain on hold until further notice.
 
 # How to use it
 
