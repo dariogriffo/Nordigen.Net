@@ -13,7 +13,7 @@ public class Requisition
         string? redirect,
         string status,
         string institutionId,
-        Guid agreement,
+        string agreement,
         string reference,
         List<string> accounts,
         string userLanguage,
@@ -46,7 +46,7 @@ public class Requisition
 
     public string InstitutionId { get; }
 
-    public Guid Agreement { get; }
+    public string Agreement { get; }
 
     public string Reference { get; }
 

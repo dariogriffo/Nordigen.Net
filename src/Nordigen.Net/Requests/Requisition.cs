@@ -12,7 +12,7 @@ public class Requisition
     public Requisition(
         string redirect,
         string institutionId,
-        Guid agreement,
+        string agreement,
         string reference,
         string userLanguage,
         string ssn,
@@ -35,7 +35,7 @@ public class Requisition
     public string InstitutionId { get; set; }
 
     [JsonProperty("agreement")]
-    public Guid Agreement { get; set; }
+    public string Agreement { get; set; }
 
     [JsonProperty("reference")]
     public string Reference { get; set; }

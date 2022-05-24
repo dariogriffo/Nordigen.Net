@@ -47,7 +47,7 @@ public class RequisitionsEndpointTests
         var request = new Requests.Requisition(
             "redirect",
             Guid.NewGuid().ToString(), 
-            Guid.NewGuid(), 
+            Guid.NewGuid().ToString(), 
             "reference",
             "userLanguage",
             "ssn",
