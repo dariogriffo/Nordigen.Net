@@ -12,10 +12,10 @@ public class Transactions
     [JsonConstructor]
     internal Transactions(Transaction[] booked, Transaction[] pending)
     {
-        _transactions = new Dictionary<string, Transaction[]>()
+        _transactions = new Dictionary<string, Transaction[]>
         {
-            { BookedKey, booked},
-            { PendingKey, pending}
+            { BookedKey, booked },
+            { PendingKey, pending }
         };
     }
 

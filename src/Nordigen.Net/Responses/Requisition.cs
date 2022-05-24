@@ -10,37 +10,37 @@ public class Requisition
     public Requisition(
         string id,
         DateTime? created,
-        string redirect,
+        string? redirect,
         string status,
-        string institution_Id,
+        string institutionId,
         Guid agreement,
         string reference,
         List<string> accounts,
-        string user_language,
+        string userLanguage,
         string link,
         string ssn,
-        bool account_selection
+        bool accountSelection
     )
     {
         Id = id;
         Created = created;
         Redirect = redirect;
         Status = status;
-        InstitutionId = institution_Id;
+        InstitutionId = institutionId;
         Agreement = agreement;
         Reference = reference;
         Accounts = accounts;
-        UserLanguage = user_language;
+        UserLanguage = userLanguage;
         Link = link;
         Ssn = ssn;
-        AccountSelection = account_selection;
+        AccountSelection = accountSelection;
     }
 
     public string Id { get; }
 
     public DateTime? Created { get; }
 
-    public string Redirect { get; }
+    public string? Redirect { get; }
 
     public string Status { get; }
 

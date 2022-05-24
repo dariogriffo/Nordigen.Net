@@ -1,9 +1,11 @@
 ﻿namespace Nordigen.Net.Internal;
 
+using Microsoft.AspNetCore.WebUtilities;
 using Model;
 using Responses;
 using Queries;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +18,8 @@ internal class AccountsEndpoint : IAccountsEndpoint, IEndpoint
         _client = client;
     }
 
-    public Task<NOneOf<Account, Error>> Get(Guid id, CancellationToken cancellationToken) => _client.Get<Account>($"api/v2/accounts/{id}/", cancellationToken);
+    public Task<NOneOf<Account, Error>> Get(Guid id, CancellationToken cancellationToken) =>
+        _client.Get<Account>($"api/v2/accounts/{id}/", cancellationToken);
 
     public async Task<NOneOf<AccountDetails, Error>> Details(Guid id, CancellationToken cancellationToken = default)
     {
@@ -30,9 +33,19 @@ internal class AccountsEndpoint : IAccountsEndpoint, IEndpoint
         return result.Match(x => NOneOf<Balance[], Error>.FromT0(x.Balances), _ => _);
     }
 
-    public async Task<NOneOf<Transactions, Error>> Transactions(Guid id, AccountTransactionsFilter filter, CancellationToken cancellationToken = default)
+    public async Task<NOneOf<Transactions, Error>> Transactions(Guid id, AccountTransactionsFilter filter,
+        CancellationToken cancellationToken = default)
     {
-        var result = await _client.Get<TransactionsHolder>($"api/v2/accounts/{id}/transactions/?date_from={filter.DateFrom:yyyy-MM-dd}&date_to={filter.DateTo:yyyy-MM-dd}", cancellationToken);
+        var parameters = new Dictionary<string, string>();
+
+        if (filter.DateFrom is { } dateFrom)
+            parameters.Add("date_from", dateFrom.ToString("yyyy-MM-dd"));
+        if (filter.DateTo is { } dateTo)
+            parameters.Add("date_to", dateTo.ToString("yyyy-MM-dd"));
+
+        var url = QueryHelpers.AddQueryString($"api/v2/accounts/{id}/transactions/", parameters);
+        var result = await _client.Get<TransactionsHolder>(url, cancellationToken);
+
         return result.Match(x => NOneOf<Transactions, Error>.FromT0(x.Transactions), _ => _);
     }
 }

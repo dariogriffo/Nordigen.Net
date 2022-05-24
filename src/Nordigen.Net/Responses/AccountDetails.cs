@@ -6,21 +6,21 @@ public class AccountDetails
 {
     [JsonConstructor]
     internal AccountDetails(
-        string resource_id,
+        string resourceId,
         string iban,
         string currency,
-        string owner_name,
-        string name,
-        string product,
-        string cash_account_type)
+        string? ownerName,
+        string? name,
+        string? product,
+        string? cashAccountType)
     {
-        ResourceId = resource_id;
+        ResourceId = resourceId;
         IBAN = iban;
         Currency = currency;
-        OwnerName = owner_name;
+        OwnerName = ownerName;
         Name = name;
         Product = product;
-        CashAccountType = cash_account_type;
+        CashAccountType = cashAccountType;
     }
 
     public string ResourceId { get; }
@@ -29,11 +29,11 @@ public class AccountDetails
 
     public string Currency { get; }
 
-    public string OwnerName { get; }
+    public string? OwnerName { get; }
 
-    public string Name { get; }
+    public string? Name { get; }
 
-    public string Product { get; }
+    public string? Product { get; }
 
-    public string CashAccountType { get; }
+    public string? CashAccountType { get; }
 }
