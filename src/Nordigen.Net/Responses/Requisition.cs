@@ -9,10 +9,10 @@ public class Requisition
     [JsonConstructor]
     public Requisition(
         string id,
-        DateTime created,
+        DateTime? created,
         string redirect,
-        RequisitionStatus status,
-        Guid institution_Id,
+        string status,
+        string institution_Id,
         Guid agreement,
         string reference,
         List<string> accounts,
@@ -38,13 +38,13 @@ public class Requisition
 
     public string Id { get; }
 
-    public DateTime Created { get; }
+    public DateTime? Created { get; }
 
     public string Redirect { get; }
 
-    public RequisitionStatus Status { get; }
+    public string Status { get; }
 
-    public Guid InstitutionId { get; }
+    public string InstitutionId { get; }
 
     public Guid Agreement { get; }
 

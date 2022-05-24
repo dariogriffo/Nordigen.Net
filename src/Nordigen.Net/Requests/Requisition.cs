@@ -5,9 +5,13 @@ namespace Nordigen.Net.Requests;
 
 public class Requisition
 {
+    public Requisition()
+    {
+    }
+
     public Requisition(
         string redirect,
-        Guid institutionId,
+        string institutionId,
         Guid agreement,
         string reference,
         string userLanguage,
@@ -25,23 +29,23 @@ public class Requisition
     }
 
     [JsonProperty("redirect")]
-    public string Redirect { get; }
+    public string Redirect { get; set; }
 
     [JsonProperty("institution_id")]
-    public Guid InstitutionId { get; }
+    public string InstitutionId { get; set; }
 
     [JsonProperty("agreement")]
-    public Guid Agreement { get; }
+    public Guid Agreement { get; set; }
 
     [JsonProperty("reference")]
-    public string Reference { get; }
+    public string Reference { get; set; }
 
     [JsonProperty("user_language")]
-    public string UserLanguage { get; }
+    public string UserLanguage { get; set; }
 
     [JsonProperty("ssn")]
-    public string Ssn { get; }
+    public string Ssn { get; set; }
 
     [JsonProperty("account_selection")]
-    public bool AccountSelection { get; }
+    public bool AccountSelection { get; set; }
 }
