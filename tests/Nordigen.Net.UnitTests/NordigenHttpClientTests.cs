@@ -38,15 +38,16 @@ public class NordigenHttpClientTests
             .Setup(x => x.Get(It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Token(authToken, 10, string.Empty, 10));
 
-
         var expected = new Account(
             "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            DateTime.Parse("2022-01-22T22:30:50.538Z"),
-            DateTime.Parse("2022-01-22T22:30:50.538Z"),
+            DateTime.Parse("2022-01-22T22:30:50.538Z").ToUniversalTime(),
+            DateTime.Parse("2022-01-22T22:30:50.538Z").ToUniversalTime(),
             "NL49ABNA1969256915",
             "Lloyds",
             new Dictionary<string, string>()
-                { { "DISCOVERED", "User has successfully authenticated and account is discovered" } });
+            {
+                { "DISCOVERED", "User has successfully authenticated and account is discovered" }
+            });
 
         var factory = Mock.Of<IHttpClientFactory>();
         Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
@@ -116,11 +117,7 @@ public class NordigenHttpClientTests
             .Setup(x => x.Refresh(refreshToken, It.IsAny<CancellationToken>()))
             .ReturnsAsync(NOneOf<Token, Error>.FromT0(lastResponse));
 
-        var options = new NordigenApiOptions()
-        {
-            Url = "https://api.nordigen.com/",
-            AccessTokenValidBeforeSeconds = 1
-        };
+        var options = new NordigenApiOptions() { Url = "https://api.nordigen.com/", AccessTokenValidBeforeSeconds = 1 };
 
         var factory = Mock.Of<IHttpClientFactory>();
         Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);

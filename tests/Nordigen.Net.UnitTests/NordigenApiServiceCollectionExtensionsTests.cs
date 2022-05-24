@@ -36,7 +36,7 @@ public class NordigenApiServiceCollectionExtensionsTests
     {
         var services = new ServiceCollection();
         services.AddNordigenApi();
-        services.Count().Should().Be(23);
+        services.Count.Should().Be(27);
     }
 
     [Fact]

@@ -32,17 +32,21 @@ internal class InstitutionsEndpoint : IInstitutionsEndpoint, IEndpoint
         _client = client;
     }
 
-    public Task<NOneOf<Institution[], Error>> GetByCountryIso3166Code(string country, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Institution[], Error>> GetByCountryIso3166Code(string? country,
+        CancellationToken cancellationToken = default)
     {
-        if (!CountryList.Contains(country))
+        if (country is { } && !CountryList.Contains(country))
         {
-            throw new ArgumentOutOfRangeException(nameof(country), "Unknown country. Please check the official ISO country codes");
+            throw new ArgumentOutOfRangeException(nameof(country),
+                "Unknown country. Please check the official ISO country codes");
         }
 
-        return _client.Get<Institution[]>($"api/v2/institutions/?country={country}", cancellationToken);
+        return country is { }
+            ? _client.Get<Institution[]>($"api/v2/institutions/?country={country}", cancellationToken)
+            : _client.Get<Institution[]>("api/v2/institutions/", cancellationToken);
     }
 
-    public Task<NOneOf<Institution, Error>> Get(Guid id, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Institution, Error>> Get(string id, CancellationToken cancellationToken = default)
     {
         return _client.Get<Institution>($"api/v2/institutions/{id}/", cancellationToken);
     }

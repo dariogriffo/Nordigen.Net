@@ -13,7 +13,7 @@ public interface IInstitutionsEndpoint
     /// <param name="country">The id of the account</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns>A list of <see cref="Institution"/> or <see cref="Error"/></returns>
-    Task<NOneOf<Institution[], Error>> GetByCountryIso3166Code(string country, CancellationToken cancellationToken = default);
+    Task<NOneOf<Institution[], Error>> GetByCountryIso3166Code(string? country, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get details about a specific Institution.
@@ -22,5 +22,5 @@ public interface IInstitutionsEndpoint
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns>The <see cref="Institution"/> or <see cref="Error"/></returns>
     /// <returns></returns>
-    Task<NOneOf<Institution, Error>> Get(Guid id, CancellationToken cancellationToken = default);
+    Task<NOneOf<Institution, Error>> Get(string id, CancellationToken cancellationToken = default);
 }
