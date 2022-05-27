@@ -2,7 +2,6 @@
 
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 public class Transaction
 {
@@ -17,7 +16,9 @@ public class Transaction
         string proprietaryBankTransactionCode,
         DateTime? bookingDate,
         DateTime? bookingDateTime,
-        DateTime valueDate,
+        DateTime? valueDate,
+        string endToEndId,
+        string bankTransactionCode,
         string remittanceInformationUnstructured)
     {
         TransactionId = transactionId;
@@ -26,10 +27,11 @@ public class Transaction
         CreditorName = creditorName;
         CreditorAccount = creditorAccount;
         TransactionAmount = transactionAmount;
-        BankTransactionCode = proprietaryBankTransactionCode;
+        BankTransactionCode = bankTransactionCode;
         BookingDate = bookingDate;
         BookingDateTime = bookingDateTime;
         ValueDate = valueDate;
+        EndToEndId = endToEndId;
         RemittanceInformationUnstructured = remittanceInformationUnstructured;
     }
 
@@ -47,7 +49,8 @@ public class Transaction
 
     public DateTime? BookingDate { get; }
 
-    public DateTime ValueDate { get; }
+    public DateTime? ValueDate { get; }
+    public string EndToEndId { get; }
 
     public string RemittanceInformationUnstructured { get; }
     public DateTime? BookingDateTime { get; set; }
