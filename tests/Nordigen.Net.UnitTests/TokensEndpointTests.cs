@@ -32,7 +32,7 @@ public class TokensEndpointTests
         handlerMock
             .When(HttpMethod.Post, url)
             .With(x => x.Headers.Any() == false)
-            .With(x => ((StringContent)x.Content!).ReadAsStringAsync().Result.Contains(Options.SecretId))
+            .With(x => ((FormUrlEncodedContent)x.Content!).ReadAsStringAsync().Result.Contains(Options.SecretId))
             .Respond("application/json", _serializer.Serialize(expected));
 
         var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };

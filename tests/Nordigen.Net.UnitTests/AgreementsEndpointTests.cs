@@ -101,7 +101,7 @@ public class AgreementsEndpointTests
             .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
             .Respond("application/json", payload);
 
-        var expected = _serializer.Deserialize<Responses.Agreement>(payload);
+        var expected = _serializer.Deserialize<Agreement>(payload);
 
         var client = new HttpClient(handlerMock) { BaseAddress = new Uri(Options.Url) };
         var tokensEndpoint = Mock.Of<ITokensEndpoint>();

@@ -20,11 +20,11 @@ public static class NordigenApiServiceCollectionExtensions
             var options = serviceProvider
                 .GetRequiredService<IConfiguration>()
                 .GetSection("NordigenApi").Get<NordigenApiOptions>();
-            if (string.IsNullOrWhiteSpace(options.SecretId) || string.IsNullOrWhiteSpace(options.SecretKey))
+            if (string.IsNullOrWhiteSpace(options?.SecretId) || string.IsNullOrWhiteSpace(options?.SecretKey))
             {
                 throw new InvalidOperationException("SecretId and SecretKey are required to connect to Nordigen");
             }
-            
+
             return options;
         });
 

@@ -4,13 +4,13 @@ using System;
 
 public class AccountTransactionsFilter
 {
-    public AccountTransactionsFilter(DateTime dateFrom, DateTime dateTo)
+    public AccountTransactionsFilter(DateTime? dateFrom, DateTime? dateTo)
     {
         DateFrom = dateFrom;
         DateTo = dateTo;
     }
 
-    public DateTime DateFrom { get; }
+    public DateTime? DateFrom { get; }
 
-    public DateTime DateTo { get; }
+    public DateTime? DateTo { get; }
 }
