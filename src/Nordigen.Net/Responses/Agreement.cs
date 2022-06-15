@@ -10,17 +10,17 @@ public class Agreement
     public Agreement(
         string id,
         DateTime created,
-        int maxHistoricalDays,
-        int accessValidForDays,
+        int max_historical_days,
+        int access_valid_for_days,
         List<string> access_scope,
-        DateTime accepted,
+        DateTime? accepted,
         string institution_id
     )
     {
         Id = id;
         Created = created;
-        MaxHistoricalDays = maxHistoricalDays;
-        AccessValidForDays = accessValidForDays;
+        MaxHistoricalDays = max_historical_days;
+        AccessValidForDays = access_valid_for_days;
         AccessScope = access_scope;
         Accepted = accepted;
         InstitutionId = institution_id;
@@ -42,7 +42,7 @@ public class Agreement
     public IReadOnlyList<string> AccessScope { get; }
 
     [JsonProperty("accepted")] 
-    public DateTime Accepted { get; }
+    public DateTime? Accepted { get; }
 
     [JsonProperty("institution_id")] 
     public string InstitutionId { get; }

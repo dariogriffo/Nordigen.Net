@@ -7,16 +7,16 @@ public class Balance
 {
     [JsonConstructor]
     internal Balance(
-        BalanceAccount balance_account,
-        string balance_type,
-        DateTime reference_date)
+        BalanceAmount balanceAmount,
+        string balanceType,
+        DateTime referenceDate)
     {
-        BalanceAccount = balance_account;
-        BalanceType = balance_type;
-        ReferenceDate = reference_date;
+        BalanceAmount = balanceAmount;
+        BalanceType = balanceType;
+        ReferenceDate = referenceDate;
     }
 
-    public BalanceAccount BalanceAccount { get; }
+    public BalanceAmount BalanceAmount { get; }
 
     public string BalanceType { get; }
 

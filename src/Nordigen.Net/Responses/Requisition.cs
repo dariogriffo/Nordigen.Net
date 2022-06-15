@@ -9,44 +9,44 @@ public class Requisition
     [JsonConstructor]
     public Requisition(
         string id,
-        DateTime created,
-        string redirect,
-        RequisitionStatus status,
-        Guid institution_Id,
-        Guid agreement,
+        DateTime? created,
+        string? redirect,
+        string status,
+        string institutionId,
+        string agreement,
         string reference,
         List<string> accounts,
-        string user_language,
+        string userLanguage,
         string link,
         string ssn,
-        bool account_selection
+        bool accountSelection
     )
     {
         Id = id;
         Created = created;
         Redirect = redirect;
         Status = status;
-        InstitutionId = institution_Id;
+        InstitutionId = institutionId;
         Agreement = agreement;
         Reference = reference;
         Accounts = accounts;
-        UserLanguage = user_language;
+        UserLanguage = userLanguage;
         Link = link;
         Ssn = ssn;
-        AccountSelection = account_selection;
+        AccountSelection = accountSelection;
     }
 
     public string Id { get; }
 
-    public DateTime Created { get; }
+    public DateTime? Created { get; }
 
-    public string Redirect { get; }
+    public string? Redirect { get; }
 
-    public RequisitionStatus Status { get; }
+    public string Status { get; }
 
-    public Guid InstitutionId { get; }
+    public string InstitutionId { get; }
 
-    public Guid Agreement { get; }
+    public string Agreement { get; }
 
     public string Reference { get; }
 

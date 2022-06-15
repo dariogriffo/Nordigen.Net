@@ -1,7 +1,10 @@
 ﻿namespace Nordigen.Net.Internal;
 
+using Newtonsoft.Json;
 using Responses;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -49,7 +52,8 @@ internal class NordigenHttpClient : INordigenHttpClient
             : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
     }
 
-    public async Task<NOneOf<TResult, Error>> Post<T, TResult>(T model, string url, CancellationToken cancellationToken = default) where T : class
+    public async Task<NOneOf<TResult, Error>> Post<T, TResult>(T model, string url,
+        CancellationToken cancellationToken = default) where T : class
     {
         try
         {
@@ -68,6 +72,43 @@ internal class NordigenHttpClient : INordigenHttpClient
             : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
     }
 
+    public async Task<NOneOf<TResult, Error>> PostUrlEncoded<T, TResult>(T model, string url,
+        CancellationToken cancellationToken = default) where T : class
+    {
+        try
+        {
+            await EnsureValidToken(cancellationToken);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return new Error(401, string.Empty, string.Empty, string.Empty);
+        }
+
+        var content = new FormUrlEncodedContent(GetDictionary(model));
+        var message = await _client.PostAsync(url, content, cancellationToken);
+        return message.IsSuccessStatusCode
+            ? _serializer.Deserialize<TResult>(await message.Content.ReadAsStringAsync())
+            : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
+    }
+
+    private Dictionary<string, string?> GetDictionary<T>(T obj)
+    {
+        var dict = new Dictionary<string, string?>();
+        var t = typeof(T);
+
+        foreach (var propertyInfo in t.GetProperties())
+        {
+            var jsonAttribute = propertyInfo.CustomAttributes
+                .FirstOrDefault(a => a.AttributeType == typeof(JsonPropertyAttribute));
+
+            var name = jsonAttribute?.ConstructorArguments?.First().Value?.ToString();
+
+            dict.Add(name ?? propertyInfo.Name, propertyInfo.GetValue(obj)?.ToString());
+        }
+
+        return dict;
+    }
+
     public async Task<NOneOf<Deleted, Error>> Delete(string url, CancellationToken cancellationToken = default)
     {
         try
@@ -80,8 +121,8 @@ internal class NordigenHttpClient : INordigenHttpClient
         }
 
         var message = await _client.DeleteAsync(url, cancellationToken);
-        return message.IsSuccessStatusCode ?
-            (NOneOf<Deleted, Error>)_serializer.Deserialize<Deleted>(await message.Content.ReadAsStringAsync())
+        return message.IsSuccessStatusCode
+            ? (NOneOf<Deleted, Error>)_serializer.Deserialize<Deleted>(await message.Content.ReadAsStringAsync())
             : _serializer.Deserialize<Error>(await message.Content.ReadAsStringAsync());
     }
 
@@ -126,6 +167,5 @@ internal class NordigenHttpClient : INordigenHttpClient
 
         var token = await _tokensEndpoint.Get(cancellationToken);
         await UpdateToken(token);
-
     }
 }

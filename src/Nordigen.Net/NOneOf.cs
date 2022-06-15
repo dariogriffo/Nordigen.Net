@@ -69,6 +69,16 @@ public struct NOneOf<T0, T1>
         };
     }
 
+    public T0 MatchT0(Func<T1, T0> f1)
+    {
+        return _index switch
+        {
+            0 => _value0!,
+            1 => f1(_value1!),
+            _ => throw new InvalidOperationException()
+        };
+    }
+
     public static NOneOf<T0, T1> FromT0(T0 input) => input;
 
     public static NOneOf<T0, T1> FromT1(T1 input) => input;

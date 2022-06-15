@@ -28,7 +28,7 @@ public class RequisitionsEndpointTests
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
-            "{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:00:48.495Z\",\"redirect\":\"string\",\"status\":{\"short\":\"CR\",\"long\":\"CREATED\",\"description\":\"Requisitionhasbeensuccessfullycreated\"},\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}";
+            "{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:00:48.495Z\",\"redirect\":\"string\",\"status\":\"CR\",\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}";
         handlerMock
             .When(HttpMethod.Post, $"/api/v2/requisitions/")
             .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
@@ -46,8 +46,8 @@ public class RequisitionsEndpointTests
 
         var request = new Requests.Requisition(
             "redirect",
-            Guid.NewGuid(), 
-            Guid.NewGuid(), 
+            Guid.NewGuid().ToString(), 
+            Guid.NewGuid().ToString(), 
             "reference",
             "userLanguage",
             "ssn",
@@ -67,7 +67,7 @@ public class RequisitionsEndpointTests
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
-            "{\"count\":123,\"next\":\"https://ob.nordigen.com/api/v2/requisitions/?limit=100&offset=0\",\"previous\":\"https://ob.nordigen.com/api/v2/requisitions/?limit=100&offset=0\",\"results\":[{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:02:24.471Z\",\"redirect\":\"string\",\"status\":{\"short\":\"CR\",\"long\":\"CREATED\",\"description\":\"Requisitionhasbeensuccessfullycreated\"},\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}]}";
+            "{\"count\":123,\"next\":\"https://ob.nordigen.com/api/v2/requisitions/?limit=100&offset=0\",\"previous\":\"https://ob.nordigen.com/api/v2/requisitions/?limit=100&offset=0\",\"results\":[{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:02:24.471Z\",\"redirect\":\"string\",\"status\":\"CR\",\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}]}";
         handlerMock
             .When(HttpMethod.Get, $"/api/v2/requisitions/?limit={command.Limit}&offset={command.Offset}")
             .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))
@@ -98,7 +98,7 @@ public class RequisitionsEndpointTests
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
-            "{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:00:48.495Z\",\"redirect\":\"string\",\"status\":{\"short\":\"CR\",\"long\":\"CREATED\",\"description\":\"Requisitionhasbeensuccessfullycreated\"},\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}";
+            "{\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"created\":\"2022-02-19T13:00:48.495Z\",\"redirect\":\"string\",\"status\":\"CR\",\"institution_id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"agreement\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"reference\":\"string\",\"accounts\":[\"3fa85f64-5717-4562-b3fc-2c963f66afa6\"],\"user_language\":\"string\",\"link\":\"https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/{$INSTITUTION_ID}\",\"ssn\":\"string\",\"account_selection\":false}";
         handlerMock
             .When(HttpMethod.Get, $"/api/v2/requisitions/{id}/")
             .With(x => x.Headers.Any(h => h.Key == "Authorization" && h.Value.First() == $"Bearer {authToken}"))

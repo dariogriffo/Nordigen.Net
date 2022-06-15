@@ -10,7 +10,7 @@ public class Account
     internal Account(
         string id,
         DateTime created,
-        DateTime last_accessed,
+        DateTime? last_accessed,
         string iban,
         string institution_id,
         IReadOnlyDictionary<string, string> status)
@@ -27,7 +27,7 @@ public class Account
 
     public DateTime Created { get; }
 
-    public DateTime LastAccessed { get; }
+    public DateTime? LastAccessed { get; }
 
     public string IBAN { get; }
 

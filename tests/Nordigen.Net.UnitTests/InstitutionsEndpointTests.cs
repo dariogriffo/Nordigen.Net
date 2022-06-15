@@ -116,7 +116,7 @@ public class InstitutionsEndpointTests
         Mock.Get(factory).Setup(x => x.CreateClient("api")).Returns(client);
         var sut = new InstitutionsEndpoint(new NordigenHttpClient(tokensEndpoint, factory, _serializer, Options));
 
-        var result = await sut.Get(id, CancellationToken.None);
+        var result = await sut.Get(id.ToString(), CancellationToken.None);
 
         result.Value.Should().BeEquivalentTo(institution);
     }
