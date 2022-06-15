@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.9.2](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.2)
+
+Several fixes by @felox2
+
 ## [0.9.1](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.1)
 
 Fixed Harry McIntyre's [OneOf](https://github.com/mcintyre321/OneOf) license
