@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+## [0.9.3](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.3)
+
+Dependencies packages with version ranges
+
 ## [0.9.2](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.2)
 
 Several fixes by @felox2
