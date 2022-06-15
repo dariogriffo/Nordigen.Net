@@ -85,3 +85,7 @@ The SDK handles the lifetime/renewal of tokens automatically for you, so only re
 OneOf simplified credit goes to [Harry McIntyre](https://github.com/mcintyre321/OneOf) 
 
 Logo Provided by [Vecteezy](https://vecteezy.com)
+
+# Contributors
+
+[@felox2](https://github.com/felox2)
