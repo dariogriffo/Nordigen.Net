@@ -11,7 +11,7 @@ internal class AgreementsEndpoint : IAgreementsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 
-    internal AgreementsEndpoint(INordigenHttpClient client)
+    public AgreementsEndpoint(INordigenHttpClient client)
     {
         _client = client;
     }
