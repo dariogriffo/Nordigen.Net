@@ -14,7 +14,7 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns>A list of <see cref="Institution"/> or <see cref="Error"/></returns>
-    Task<NOneOf<Requisition, Error>> Get(Guid id, CancellationToken cancellationToken = default);
+    Task<NOneOf<Requisition, Error>> Get(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Paginate requisitions.
@@ -39,6 +39,6 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns><see cref="Deleted"/> or <see cref="Error"/></returns>
-    Task<NOneOf<Deleted, Error>> Delete(Guid id, CancellationToken cancellationToken = default);
+    Task<NOneOf<Deleted, Error>> Delete(string id, CancellationToken cancellationToken = default);
 
 }

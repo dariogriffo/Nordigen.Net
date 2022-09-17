@@ -23,7 +23,7 @@ public interface IAgreementsEndpoint
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns>The <see cref="Responses.Agreement"/> or <see cref="Error"/></returns>
     /// <returns></returns>
-    Task<NOneOf<Agreement, Error>> Get(Guid id, CancellationToken cancellationToken = default);
+    Task<NOneOf<Agreement, Error>> Get(string id, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Paginate agreements.
@@ -39,5 +39,5 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the requisition</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
     /// <returns><see cref="Deleted"/> or <see cref="Error"/></returns>
-    public Task<NOneOf<Deleted, Error>> Delete(Guid id, CancellationToken cancellationToken = default);
+    public Task<NOneOf<Deleted, Error>> Delete(string id, CancellationToken cancellationToken = default);
 }

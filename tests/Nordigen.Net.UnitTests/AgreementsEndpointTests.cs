@@ -24,7 +24,7 @@ public class AgreementsEndpointTests
     [Fact]
     public async Task Post_When_Request_Is_Valid_Returns_EndUser_Agreement()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -60,7 +60,7 @@ public class AgreementsEndpointTests
     public async Task Paginate_When_Agreements_Are_Found_Returns_Valid_List()
     {
         var command = new Paginate<Agreement>(1, 10);
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -91,7 +91,7 @@ public class AgreementsEndpointTests
     [Fact]
     public async Task Get_Single_Agreement_When_Agreement_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -120,7 +120,7 @@ public class AgreementsEndpointTests
     [Fact]
     public async Task Get_Single_Agreement_When_Agreement_Is_Not_Found_Returns_NotFound()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -149,7 +149,7 @@ public class AgreementsEndpointTests
     [Fact]
     public async Task Delete_When_Agreement_Is_Found_Returns_Deleted()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =

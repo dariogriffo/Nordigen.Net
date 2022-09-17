@@ -23,7 +23,7 @@ public class AccountsEndpointTests
     [Fact]
     public async Task Get_When_Account_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -52,7 +52,7 @@ public class AccountsEndpointTests
     [Fact]
     public async Task Get_When_Account_Is_Not_Found_Returns_NotFound()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -81,7 +81,7 @@ public class AccountsEndpointTests
     [Fact]
     public async Task Get_Server_Errors_Returns_UnknownRequestError()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -111,7 +111,7 @@ public class AccountsEndpointTests
     [Fact]
     public async Task Balances_When_Account_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -141,7 +141,7 @@ public class AccountsEndpointTests
     [Fact]
     public async Task Details_When_Account_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -172,7 +172,7 @@ public class AccountsEndpointTests
     {
         var from = DateTime.Now.Date;
         var to = DateTime.Now.Date.AddDays(1);
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =

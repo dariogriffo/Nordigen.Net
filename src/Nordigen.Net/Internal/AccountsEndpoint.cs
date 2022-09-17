@@ -18,22 +18,24 @@ internal class AccountsEndpoint : IAccountsEndpoint, IEndpoint
         _client = client;
     }
 
-    public Task<NOneOf<Account, Error>> Get(Guid id, CancellationToken cancellationToken) =>
+    public Task<NOneOf<Account, Error>> Get(string id, CancellationToken cancellationToken) =>
         _client.Get<Account>($"api/v2/accounts/{id}/", cancellationToken);
 
-    public async Task<NOneOf<AccountDetails, Error>> Details(Guid id, CancellationToken cancellationToken = default)
+    public async Task<NOneOf<AccountDetails, Error>> Details(string id, CancellationToken cancellationToken = default)
     {
         var result = await _client.Get<AccountDetailsHolder>($"api/v2/accounts/{id}/details/", cancellationToken);
         return result.Match(x => NOneOf<AccountDetails, Error>.FromT0(x.Account), _ => _);
     }
 
-    public async Task<NOneOf<Balance[], Error>> Balances(Guid id, CancellationToken cancellationToken = default)
+    public async Task<NOneOf<Balance[], Error>> Balances(string id, CancellationToken cancellationToken = default)
     {
         var result = await _client.Get<BalancesHolder>($"api/v2/accounts/{id}/balances/", cancellationToken);
         return result.Match(x => NOneOf<Balance[], Error>.FromT0(x.Balances), _ => _);
     }
 
-    public async Task<NOneOf<Transactions, Error>> Transactions(Guid id, AccountTransactionsFilter filter,
+    public async Task<NOneOf<Transactions, Error>> Transactions(
+        string id,
+        AccountTransactionsFilter filter,
         CancellationToken cancellationToken = default)
     {
         var parameters = new Dictionary<string, string>();

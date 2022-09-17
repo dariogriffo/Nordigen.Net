@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class RequisitionsEndpoint : IRequisitionsEndpoint, IEndpoint
+internal class RequisitionsEndpoint : IRequisitionsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 
@@ -15,12 +15,13 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint, IEndpoint
         _client = client;
     }
 
-    public Task<NOneOf<Requisition, Error>> Get(Guid id, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Requisition, Error>> Get(string id, CancellationToken cancellationToken = default)
     {
         return _client.Get<Requisition>($"api/v2/requisitions/{id}/", cancellationToken);
     }
 
-    public async Task<NOneOf<PaginationResult<Requisition>, Error>> Paginate(Paginate<Requisition> command,
+    public async Task<NOneOf<PaginationResult<Requisition>, Error>> Paginate(
+        Paginate<Requisition> command,
         CancellationToken cancellationToken = default)
     {
         var result = await _client.Get<Internal.Model.PaginationResult<Requisition>>(
@@ -30,14 +31,17 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint, IEndpoint
                 new PaginationResult<Requisition>(x, command.Limit, command.Offset)), _ => _);
     }
 
-    public async Task<NOneOf<Requisition, Error>> Post(Requests.Requisition request,
+    public async Task<NOneOf<Requisition, Error>> Post(
+        Requests.Requisition request,
         CancellationToken cancellationToken = default)
     {
-        return await _client.PostUrlEncoded<Requests.Requisition, Requisition>(request, "api/v2/requisitions/",
+        return await _client.PostUrlEncoded<Requests.Requisition, Requisition>(
+            request, 
+            "api/v2/requisitions/",
             cancellationToken);
     }
 
-    public Task<NOneOf<Deleted, Error>> Delete(Guid id, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Deleted, Error>> Delete(string id, CancellationToken cancellationToken = default)
     {
         return _client.Delete($"api/v2/requisitions/{id}/", cancellationToken);
     }

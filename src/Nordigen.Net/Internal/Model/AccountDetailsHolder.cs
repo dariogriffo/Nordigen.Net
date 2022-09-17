@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 using Responses;
 
-public class AccountDetailsHolder
+internal class AccountDetailsHolder
 {
     [JsonConstructor]
     public AccountDetailsHolder(AccountDetails account)

@@ -11,7 +11,7 @@ internal class AgreementsEndpoint : IAgreementsEndpoint, IEndpoint
 {
     private readonly INordigenHttpClient _client;
 
-    internal AgreementsEndpoint(INordigenHttpClient client)
+    public AgreementsEndpoint(INordigenHttpClient client)
     {
         _client = client;
     }
@@ -21,7 +21,7 @@ internal class AgreementsEndpoint : IAgreementsEndpoint, IEndpoint
         return await _client.Post<Agreement, Responses.Agreement>(request, "/api/v2/agreements/enduser/", cancellationToken);
     }
 
-    public Task<NOneOf<Responses.Agreement, Error>> Get(Guid id, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Responses.Agreement, Error>> Get(string id, CancellationToken cancellationToken = default)
         => _client.Get<Responses.Agreement>($"api/v2/agreements/enduser/{id}/", cancellationToken);
 
     public async Task<NOneOf<PaginationResult<Responses.Agreement>, Error>> Paginate(Paginate<Responses.Agreement> command, CancellationToken cancellationToken = default)
@@ -30,7 +30,7 @@ internal class AgreementsEndpoint : IAgreementsEndpoint, IEndpoint
         return result.Match(x => NOneOf<PaginationResult<Responses.Agreement>, Error>.FromT0(new PaginationResult<Responses.Agreement>(x, command.Limit, command.Offset)), _ => _);
     }
 
-    public Task<NOneOf<Deleted, Error>> Delete(Guid id, CancellationToken cancellationToken = default)
+    public Task<NOneOf<Deleted, Error>> Delete(string id, CancellationToken cancellationToken = default)
     {
         return _client.Delete($"api/v2/agreements/enduser/{id}/", cancellationToken);
     }

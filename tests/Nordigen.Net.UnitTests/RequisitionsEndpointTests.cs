@@ -24,7 +24,7 @@ public class RequisitionsEndpointTests
     [Fact]
     public async Task Post_When_Request_Is_Valid_Returns_Requisition()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -63,7 +63,7 @@ public class RequisitionsEndpointTests
     public async Task Paginate_When_Requisitions_Are_Found_Returns_Valid_List()
     {
         var command = new Paginate<Requisition>(1, 10);
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -94,7 +94,7 @@ public class RequisitionsEndpointTests
     [Fact]
     public async Task Get_Single_Requisition_When_Requisition_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
@@ -123,7 +123,7 @@ public class RequisitionsEndpointTests
     [Fact]
     public async Task Get_Single_Requisition_When_Requisition_Is_Not_Found_Returns_NotFound()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -152,7 +152,7 @@ public class RequisitionsEndpointTests
     [Fact]
     public async Task Delete_When_Requisition_Is_Found_Returns_Deleted()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =

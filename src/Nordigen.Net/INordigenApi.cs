@@ -6,6 +6,8 @@ public interface INordigenApi
 
     IInstitutionsEndpoint Institutions { get; }
 
+    IAgreementsEndpoint Agreements { get; }
+
     IRequisitionsEndpoint Requisitions { get; }
 
 }

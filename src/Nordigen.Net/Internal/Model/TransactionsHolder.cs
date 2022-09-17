@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 using Responses;
 
-public class TransactionsHolder
+internal class TransactionsHolder
 {
     [JsonConstructor]
     public TransactionsHolder(Transactions transactions)

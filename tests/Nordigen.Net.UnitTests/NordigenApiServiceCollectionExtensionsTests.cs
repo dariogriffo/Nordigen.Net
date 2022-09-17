@@ -104,4 +104,45 @@ public class NordigenApiServiceCollectionExtensionsTests
         Action act = () => provider.GetService<INordigenApi>();
         act.Should().Throw<InvalidOperationException>();
     }
+    
+    [Fact]
+    public void AddNordigenApi_With_Valid_Api_Is_Resolved_Correctly()
+    {
+        var services = new ServiceCollection();
+        services.AddNordigenApi();
+        var dictionary = new Dictionary<string, string>()
+        {
+            { "NordigenApi:SecretId", "secretId" },
+            { "NordigenApi:SecretKey", "secretKey" },
+        };
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(dictionary).Build();
+        services.AddSingleton<IConfiguration>(configuration);
+        using var provider = services.BuildServiceProvider();
+        // ReSharper disable once AccessToDisposedClosure
+        var api = provider.GetService<INordigenApi>();
+        api.Should().NotBeNull();
+    }
+    
+    [Theory]
+    [InlineData(typeof(IAccountsEndpoint))]
+    [InlineData(typeof(IAgreementsEndpoint))]
+    [InlineData(typeof(IRequisitionsEndpoint))]
+    [InlineData(typeof(IInstitutionsEndpoint))]
+    [InlineData(typeof(IAgreementsEndpoint))]
+    void AddNordigenApi_With_Valid_All_Endpoints_Are_Resolved_Correctly(Type type)
+    {
+        var services = new ServiceCollection();
+        services.AddNordigenApi();
+        var dictionary = new Dictionary<string, string>()
+        {
+            { "NordigenApi:SecretId", "secretId" },
+            { "NordigenApi:SecretKey", "secretKey" },
+        };
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(dictionary).Build();
+        services.AddSingleton<IConfiguration>(configuration);
+        using var provider = services.BuildServiceProvider();
+        // ReSharper disable once AccessToDisposedClosure
+        var implementation = provider.GetService(type);
+        implementation.Should().NotBeNull();
+    }
 }

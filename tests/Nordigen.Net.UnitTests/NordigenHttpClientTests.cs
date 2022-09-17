@@ -22,7 +22,7 @@ public class NordigenHttpClientTests
     [Fact]
     public async Task Get_When_Request_Is_Valid_Returns_Correct_Response()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -61,7 +61,7 @@ public class NordigenHttpClientTests
     [Fact]
     public async Task Get_When_Called_Twice_And_Token_Is_Still_Valid_Reuses_Same_Token()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock
@@ -95,7 +95,7 @@ public class NordigenHttpClientTests
     public async Task Get_When_Called_Twice_And_Token_Is_Not_Valid_But_Refresh_Is_Valid_Refreshes_Token()
     {
         var refreshToken = Guid.NewGuid().ToString();
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         handlerMock

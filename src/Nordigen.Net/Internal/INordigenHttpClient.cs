@@ -4,7 +4,7 @@ using Responses;
 using System.Threading;
 using System.Threading.Tasks;
 
-public interface INordigenHttpClient
+internal interface INordigenHttpClient
 {
     Task<NOneOf<T, Error>> Get<T>(string url, CancellationToken cancellationToken = default)
         where T : class;

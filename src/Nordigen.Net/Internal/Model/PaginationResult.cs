@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 
 
-public class PaginationResult<T>
+internal class PaginationResult<T>
 {
     [JsonConstructor]
     public PaginationResult(

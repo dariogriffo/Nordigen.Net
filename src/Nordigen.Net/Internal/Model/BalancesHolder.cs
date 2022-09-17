@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 using Responses;
 
-public class BalancesHolder
+internal class BalancesHolder
 {
     [JsonConstructor]
     public BalancesHolder(Balance[] balances)

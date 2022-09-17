@@ -5,10 +5,6 @@ namespace Nordigen.Net.Requests;
 
 public class Requisition
 {
-    public Requisition()
-    {
-    }
-
     public Requisition(
         string redirect,
         string institutionId,

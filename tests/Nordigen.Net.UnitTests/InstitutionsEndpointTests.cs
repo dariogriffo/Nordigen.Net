@@ -96,7 +96,7 @@ public class InstitutionsEndpointTests
     [Fact]
     public async Task Get_When_Id_Is_Found_Returns_Valid_Information()
     {
-        var id = Guid.NewGuid();
+        var id = Guid.NewGuid().ToString();
         var authToken = Guid.NewGuid().ToString();
         var handlerMock = new MockHttpMessageHandler();
         const string payload =
