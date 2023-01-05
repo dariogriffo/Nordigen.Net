@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+## [0.12.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.12.0)
+
+Add RemittanceInformationUnstructuredArray
+
+## [0.11.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.11.0)
+
+Add More fields to Transaction
+
 ## [0.9.3](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.9.3)
 
 Dependencies packages with version ranges
