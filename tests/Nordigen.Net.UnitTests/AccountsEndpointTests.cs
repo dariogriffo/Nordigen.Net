@@ -200,4 +200,15 @@ public class AccountsEndpointTests
 
         result.AsT0.Should().BeEquivalentTo(expected);
     }
+
+    [Fact]
+    public  void Transactions_When_Valid_Information_Deserialize_Correctly()
+    {
+        const string payload =
+            "{\"booked\": [{\"transactionId\": \"string\",\"debtorName\": \"string\",\"debtorAccount\": {\"iban\": \"string\"},\"transactionAmount\": {\"currency\": \"string\",\"amount\": \"855.51\"},\"bankTransactionCode\": \"string\",\"bookingDate\": \"2022-01-23\",\"valueDate\": \"2022-01-19\",\"remittanceInformationUnstructured\": \"string\",\"remittanceInformationUnstructuredArray\": [\"string1\", \"string2\"]},{\"transactionId\": \"string\",\"transactionAmount\": {\"currency\": \"string\",\"amount\": \"-891.75\"},\"bankTransactionCode\": \"string\",\"bookingDate\": \"2022-01-23\",\"valueDate\": \"2022-01-21\",\"remittanceInformationUnstructured\": \"string\"}],\"pending\": [{\"transactionAmount\": {\"currency\": \"string\",\"amount\": \"423.35\"},\"valueDate\": \"2022-01-18\",\"remittanceInformationUnstructured\": \"string\"}]}";
+            
+        var expected = _serializer.Deserialize<Transactions>(payload);
+
+        expected.Booked.First().RemittanceInformationUnstructuredArray.Should().HaveCount(2);
+    }
 }

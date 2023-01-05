@@ -29,7 +29,8 @@ public class Transaction
         DateTime? valueDateTime,
         string? remittanceInformationUnstructured,
         string? additionalInformation,
-        string? remittanceInformationStructured)
+        string? remittanceInformationStructured,
+        string[]? remittanceInformationUnstructuredArray)
     {
         TransactionId = transactionId;
         BankTransactionCode = bankTransactionCode;
@@ -54,6 +55,7 @@ public class Transaction
         RemittanceInformationUnstructured = remittanceInformationUnstructured;
         AdditionalInformation = additionalInformation;
         RemittanceInformationStructured = remittanceInformationStructured;
+        RemittanceInformationUnstructuredArray = remittanceInformationUnstructuredArray;
     }
     public string? TransactionId { get; }
     public string? BankTransactionCode { get; }
@@ -82,4 +84,5 @@ public class Transaction
     public string? RemittanceInformationUnstructured { get; }
     public string? AdditionalInformation { get; }
     public string? RemittanceInformationStructured { get; } 
+    public string[]? RemittanceInformationUnstructuredArray { get; } 
 }
